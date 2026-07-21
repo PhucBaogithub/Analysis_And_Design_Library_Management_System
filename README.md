@@ -168,15 +168,11 @@ Khi biên dịch cần giữ nguyên đường dẫn `Requirements/assets/huflit
 - Sơ đồ và wireframe phải phản ánh cùng phiên bản nghiệp vụ với tài liệu yêu cầu.
 - Tài liệu phát hành cần cập nhật lịch sử phiên bản và trạng thái phê duyệt.
 
-## Nhóm thực hiện
+## Người thực hiện
 
-| Thành viên | Mã số sinh viên |
+| Họ và tên | Mã số sinh viên |
 | --- | --- |
-| Lương Thiên Bảo | 22DH114453 |
 | Huỳnh Phúc Bảo | 22DH110240 |
-| Giảng Lâm Đăng Khoa | 22DH114589 |
-| Nguyễn Thái Thành Đạt | 22DH110747 |
-| Nguyễn Việt Hòa | 22DH114546 |
 
 **Giảng viên hướng dẫn:** TS/ThS Đặng Thị Kim Giao<br>
 **Đơn vị:** Khoa Công nghệ Thông tin, Trường Đại học Ngoại ngữ – Tin học Thành phố Hồ Chí Minh
