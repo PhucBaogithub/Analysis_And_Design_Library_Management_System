@@ -12,12 +12,15 @@ Repository này lưu trữ tài liệu phân tích, thiết kế và bản mẫu
 ## Cấu trúc thư mục
 
 - Database/: Tài liệu ERD và mô hình dữ liệu.
-- Requirements/: Business Requirement Document và User Stories/Acceptance Criteria.
+- Requirements/: SRS, Business Requirement Document và User Stories/Acceptance Criteria.
 - Diagrams/: Sơ đồ hoạt động, use case, sequence, BPMN.
 - Wireframes/: Bản thiết kế giao diện từ Figma.
+- Report/: Báo cáo phân tích và thiết kế gốc.
 
 ## Tài liệu có sẵn
 
+- [Software Requirements Specification (PDF)](Requirements/SRS.pdf)
+- [Mã nguồn LaTeX của SRS](Requirements/SRS.tex)
 - Business Requirement Document
 - User Stories & Acceptance Criteria
 - Use Case Diagram
@@ -29,7 +32,7 @@ Repository này lưu trữ tài liệu phân tích, thiết kế và bản mẫu
 
 ## Cách sử dụng
 
-1. Mở thư mục Requirements để xem yêu cầu nghiệp vụ.
+1. Đọc `Requirements/SRS.pdf` để nắm baseline yêu cầu, quy tắc nghiệp vụ, NFR và ma trận truy vết.
 2. Xem các sơ đồ trong thư mục Diagrams để hiểu luồng hệ thống.
 3. Xem ERD trong thư mục Database để hiểu cấu trúc dữ liệu.
 4. Mở wireframe trong thư mục Wireframes để tham khảo giao diện.

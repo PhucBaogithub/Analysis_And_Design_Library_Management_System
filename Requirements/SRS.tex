@@ -1,0 +1,399 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[vietnamese]{babel}
+\usepackage{graphicx,xcolor,booktabs,longtable,array,tabularx,multirow}
+\usepackage{enumitem,float,fancyhdr,lastpage,hyperref,titlesec,caption}
+\usepackage{microtype}
+\definecolor{HUFLITblue}{HTML}{123B70}
+\definecolor{HUFLITred}{HTML}{C62026}
+\definecolor{LightBlue}{HTML}{EAF1F8}
+\hypersetup{colorlinks=true,linkcolor=HUFLITblue,urlcolor=HUFLITblue,pdftitle={Software Requirements Specification -- Hệ thống quản lý thư viện},pdfauthor={Nhóm sinh viên HUFLIT}}
+\setlength{\parindent}{1.2cm}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=1.1cm}
+\renewcommand{\arraystretch}{1.25}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small SRS -- Hệ thống quản lý thư viện}
+\fancyhead[R]{\small HUFLIT -- Khoa CNTT}
+\fancyfoot[L]{\small Phiên bản 1.0}
+\fancyfoot[R]{\small Trang \thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\titleformat{\chapter}{\normalfont\bfseries\color{HUFLITblue}\Huge}{\thechapter.}{0.6em}{}
+\titleformat{\section}{\normalfont\bfseries\color{HUFLITblue}\Large}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\bfseries\large}{\thesubsection}{0.6em}{}
+\captionsetup{font=small,labelfont=bf}
+\begin{document}
+\begin{titlepage}
+\centering
+{\bfseries BỘ GIÁO DỤC VÀ ĐÀO TẠO\par}
+{\bfseries TRƯỜNG ĐẠI HỌC NGOẠI NGỮ -- TIN HỌC TP. HỒ CHÍ MINH\par}
+{\bfseries KHOA CÔNG NGHỆ THÔNG TIN\par}
+\vspace{0.8cm}
+\includegraphics[width=4.2cm]{assets/huflit-logo.png}\par
+\vspace{0.8cm}
+{\color{HUFLITblue}\rule{\textwidth}{1.5pt}}\par\vspace{0.5cm}
+{\Huge\bfseries ĐẶC TẢ YÊU CẦU PHẦN MỀM\par}
+\vspace{0.35cm}
+{\LARGE\bfseries HỆ THỐNG QUẢN LÝ THƯ VIỆN\par}
+\vspace{0.35cm}
+{\Large Software Requirements Specification (SRS)\par}
+\vspace{0.5cm}{\color{HUFLITblue}\rule{\textwidth}{1.5pt}}\par
+\vfill
+\begin{tabular}{L{5cm}L{9cm}}
+Học phần: & Phân tích thiết kế phần mềm\\
+Giảng viên hướng dẫn: & TS/ThS Đặng Thị Kim Giao\\
+Phiên bản: & 1.0 -- Baseline\\
+Trạng thái: & Sẵn sàng thẩm định\\
+Ngày phát hành: & 21/07/2026\\
+\end{tabular}
+\vfill
+{\bfseries Thành viên thực hiện}\par\smallskip
+\begin{tabular}{ll}
+Lương Thiên Bảo & 22DH114453\\
+Huỳnh Phúc Bảo & 22DH110240\\
+Giảng Lâm Đăng Khoa & 22DH114589\\
+Nguyễn Thái Thành Đạt & 22DH110747\\
+Nguyễn Việt Hòa & 22DH114546
+\end{tabular}
+\vfill
+{\bfseries Thành phố Hồ Chí Minh, 2026}
+\end{titlepage}
+
+\chapter*{Kiểm soát tài liệu}\addcontentsline{toc}{chapter}{Kiểm soát tài liệu}
+\begin{tabularx}{\textwidth}{L{3.2cm}Y}
+\toprule
+Tên tài liệu & Đặc tả yêu cầu phần mềm -- Hệ thống quản lý thư viện\\
+Nguồn cơ sở & Report ``Analysis And Design Library Management System'', các sơ đồ và tài liệu yêu cầu trong repository\\
+Mục đích & Thiết lập baseline yêu cầu có thể thiết kế, phát triển, kiểm thử và nghiệm thu\\
+Đối tượng đọc & Product Owner, BA, kiến trúc sư, lập trình viên, kiểm thử viên, thủ thư và giảng viên\\
+Chuẩn tham chiếu & Cấu trúc theo tinh thần ISO/IEC/IEEE 29148; định danh yêu cầu hỗ trợ truy vết\\
+\bottomrule
+\end{tabularx}
+
+\section*{Lịch sử phiên bản}
+\begin{tabularx}{\textwidth}{L{1.5cm}L{2.5cm}L{3cm}Y}
+\toprule Phiên bản & Ngày & Người thực hiện & Nội dung\\\midrule
+0.1 & 02/04/2024 & Nhóm dự án & Report phân tích và thiết kế ban đầu\\
+1.0 & 21/07/2026 & Nhóm dự án & Chuẩn hóa SRS; bổ sung phạm vi, NFR, business rules, dữ liệu, truy vết, nghiệm thu và rủi ro\\
+\bottomrule
+\end{tabularx}
+
+\section*{Phê duyệt}
+\begin{tabularx}{\textwidth}{L{4cm}Y L{3cm}}
+\toprule Vai trò & Họ tên & Ngày/Ký xác nhận\\\midrule
+Giảng viên/Product Sponsor & TS/ThS Đặng Thị Kim Giao & \\
+Đại diện nghiệp vụ thư viện &  & \\
+Trưởng nhóm BA &  & \\
+Trưởng nhóm kỹ thuật &  & \\
+\bottomrule
+\end{tabularx}
+\tableofcontents
+\listoftables
+
+\chapter{Giới thiệu}
+\section{Mục đích}
+Tài liệu mô tả đầy đủ các yêu cầu nghiệp vụ, chức năng, dữ liệu, giao diện và chất lượng của Hệ thống quản lý thư viện. Mỗi yêu cầu được gắn mã duy nhất để làm căn cứ thiết kế, lập trình, kiểm thử chấp nhận người dùng (UAT) và quản lý thay đổi.
+
+\section{Phạm vi sản phẩm}
+Hệ thống số hóa việc quản lý tài khoản độc giả, thẻ thư viện, thể loại, đầu sách, bản sao sách, đăng ký mượn, phiếu mượn và phiếu trả. Độc giả tự phục vụ việc đăng ký, tra cứu và theo dõi lịch sử; thủ thư quản trị dữ liệu và xử lý vòng đời mượn--trả.
+
+\subsection{Trong phạm vi}
+\begin{itemize}
+\item Xác thực, phân quyền hai vai trò Độc giả và Thủ thư.
+\item Quản lý danh mục, đầu sách và từng bản sao vật lý.
+\item Đăng ký thẻ, đăng ký mượn, lập/cập nhật phiếu mượn và phiếu trả.
+\item Tra cứu, lịch sử giao dịch, phí phạt và báo cáo vận hành cơ bản.
+\item Nhật ký các thao tác quản trị quan trọng và bảo vệ dữ liệu cá nhân.
+\end{itemize}
+\subsection{Ngoài phạm vi phiên bản 1.0}
+Mua sắm sách, kế toán/thu tiền trực tuyến, RFID/cổng từ, liên thông thư viện khác, ứng dụng di động native, sách điện tử có DRM và gợi ý sách bằng AI không thuộc baseline này.
+
+\section{Thuật ngữ và viết tắt}
+\begin{longtable}{L{3.2cm}L{11.5cm}}
+\toprule Thuật ngữ & Định nghĩa\\\midrule\endhead
+Đầu sách & Thông tin thư mục chung của một tựa sách; một đầu sách có nhiều bản sao.\\
+Sách/Bản sao & Hiện vật vật lý có mã sách duy nhất và trạng thái riêng.\\
+Độc giả & Người đăng ký tài khoản và sử dụng dịch vụ thư viện.\\
+Thủ thư & Nhân sự có quyền vận hành danh mục và giao dịch mượn--trả.\\
+SRS & Software Requirements Specification -- Đặc tả yêu cầu phần mềm.\\
+UAT & User Acceptance Testing -- Kiểm thử chấp nhận người dùng.\\
+RBAC & Phân quyền theo vai trò.\\
+PII & Dữ liệu định danh cá nhân.\\
+\bottomrule
+\end{longtable}
+
+\section{Tài liệu tham chiếu}
+\begin{itemize}
+\item Report phân tích và thiết kế hệ thống, ngày 02/04/2024.
+\item Business Requirement Document; User Stories \& Acceptance Criteria.
+\item Use Case, Activity, Sequence, BPMN, ERD và wireframe trong repository dự án.
+\end{itemize}
+
+\chapter{Bối cảnh nghiệp vụ}
+\section{Mục tiêu và chỉ số thành công}
+\begin{longtable}{L{2cm}L{7.2cm}L{5.4cm}}
+\toprule Mã & Mục tiêu & Chỉ số nghiệm thu\\\midrule\endhead
+BG-01 & Tập trung dữ liệu sách và giao dịch & 100\% bản sao và giao dịch mới có mã duy nhất, lưu trong hệ thống\\
+BG-02 & Giảm thao tác thủ công & Một giao dịch mượn/trả hợp lệ hoàn tất trong tối đa 2 phút tại UAT\\
+BG-03 & Tăng khả năng tự phục vụ & Độc giả tự tra cứu sách, thẻ và lịch sử mà không cần thủ thư hỗ trợ\\
+BG-04 & Kiểm soát tồn kho & Trạng thái bản sao cập nhật nguyên tử sau mượn/trả; không phát sinh mượn trùng\\
+BG-05 & Bảo vệ dữ liệu & 100\% chức năng quản trị được kiểm soát quyền và ghi nhật ký\\
+\bottomrule
+\end{longtable}
+
+\section{Stakeholder và trách nhiệm}
+\begin{tabularx}{\textwidth}{L{3cm}L{4cm}Y}
+\toprule Stakeholder & Quan tâm chính & Trách nhiệm\\\midrule
+Sponsor/Giảng viên & Mức độ hoàn thiện, đúng phạm vi & Phê duyệt baseline và thay đổi lớn\\
+Đại diện thư viện & Quy trình phù hợp, dữ liệu chính xác & Xác nhận business rule và UAT\\
+Độc giả & Dễ dùng, minh bạch trạng thái & Tham gia khảo sát và UAT luồng tự phục vụ\\
+Thủ thư & Tốc độ xử lý, kiểm soát lỗi & Chủ trì UAT nghiệp vụ\\
+BA & Yêu cầu rõ, truy vết được & Quản lý SRS, gap và change request\\
+Dev/Architect & Tính khả thi, kiến trúc & Thiết kế và hiện thực hóa\\
+QA & Khả năng kiểm thử & Thiết kế test theo RTM và báo cáo chất lượng\\
+\bottomrule
+\end{tabularx}
+
+\section{Giả định và ràng buộc}
+\begin{itemize}
+\item Thư viện có kết nối mạng nội bộ/Internet ổn định; mỗi người dùng có một tài khoản duy nhất.
+\item Độc giả từ đủ 16 tuổi theo report gốc; chính sách có thể cấu hình khi đơn vị nghiệp vụ xác nhận.
+\item Phiên bản đầu là ứng dụng web responsive, ngôn ngữ tiếng Việt và múi giờ Việt Nam (UTC+7).
+\item Hệ quản trị CSDL quan hệ phải hỗ trợ giao dịch ACID, khóa ngoại và sao lưu.
+\item Thời hạn mượn, số sách tối đa, hạng thẻ và công thức phạt là tham số cấu hình, không ghi cố định trong mã nguồn.
+\end{itemize}
+
+\chapter{Yêu cầu nghiệp vụ và quy tắc}
+\section{Business requirements}
+\begin{longtable}{L{2cm}L{10.2cm}L{2.3cm}}
+\toprule Mã & Yêu cầu & Ưu tiên\\\midrule\endhead
+BR-01 & Cung cấp một nguồn dữ liệu thống nhất cho tài khoản, thẻ, danh mục và giao dịch. & Must\\
+BR-02 & Cho phép độc giả tự đăng ký, tìm kiếm, đăng ký thẻ/mượn và xem lịch sử. & Must\\
+BR-03 & Cho phép thủ thư quản lý toàn bộ vòng đời sách và giao dịch. & Must\\
+BR-04 & Ngăn giao dịch không hợp lệ do thẻ, tồn kho, hạn mức hoặc trạng thái sách. & Must\\
+BR-05 & Cung cấp dữ liệu kiểm toán và báo cáo phục vụ vận hành. & Should\\
+\bottomrule
+\end{longtable}
+
+\section{Business rules}
+\begin{longtable}{L{2cm}L{12.5cm}}
+\toprule Mã & Quy tắc\\\midrule\endhead
+RULE-01 & Tên đăng nhập, số định danh cá nhân và mã thẻ (khi có) là duy nhất.\\
+RULE-02 & Người đăng ký phải đủ tuổi tối thiểu cấu hình; mặc định là 16 tuổi.\\
+RULE-03 & Chỉ tài khoản đang hoạt động mới được đăng nhập và đăng ký thẻ.\\
+RULE-04 & Mỗi tài khoản có tối đa một thẻ đang hiệu lực tại một thời điểm.\\
+RULE-05 & Chỉ thẻ đang hiệu lực, không bị khóa/hết hạn và không vượt hạn mức mới được mượn.\\
+RULE-06 & Chỉ bản sao ở trạng thái ``Sẵn sàng'' mới được gắn vào giao dịch mượn mới.\\
+RULE-07 & Khi xác nhận mượn, trạng thái sách chuyển thành ``Đang mượn'' trong cùng giao dịch dữ liệu.\\
+RULE-08 & Khi trả, trạng thái chuyển thành ``Sẵn sàng'', ``Hư hỏng'' hoặc ``Mất'' theo kiểm tra thực tế.\\
+RULE-09 & Ngày dự kiến trả không trước ngày mượn; ngày trả thực tế không trước ngày mượn.\\
+RULE-10 & Phí phạt được tính từ quá hạn và/hoặc tình trạng sách theo chính sách cấu hình; thủ thư phải xác nhận.\\
+RULE-11 & Không xóa cứng dữ liệu đã có lịch sử giao dịch; sử dụng trạng thái ngưng hoạt động.\\
+RULE-12 & Mọi thay đổi tài khoản, thẻ, sách, phiếu mượn/trả và cấu hình phải có người thực hiện, thời điểm, giá trị trước/sau.\\
+\bottomrule
+\end{longtable}
+
+\chapter{Yêu cầu chức năng}
+\section{Xác thực và tài khoản}
+\begin{longtable}{L{2.2cm}L{9.9cm}L{2.2cm}}
+\toprule Mã & Mô tả yêu cầu kiểm chứng được & Ưu tiên\\\midrule\endhead
+FR-AUTH-01 & Hệ thống cho phép độc giả đăng ký bằng tên đăng nhập, mật khẩu, họ tên, số điện thoại, địa chỉ và ngày sinh; kiểm tra bắt buộc, định dạng, tuổi và trùng lặp. & Must\\
+FR-AUTH-02 & Hệ thống xác thực thông tin đăng nhập và tạo phiên theo đúng vai trò; thông báo lỗi không tiết lộ tài khoản có tồn tại hay không. & Must\\
+FR-AUTH-03 & Người dùng có thể đăng xuất; phiên và token liên quan bị vô hiệu hóa. & Must\\
+FR-AUTH-04 & Độc giả chỉ xem/chỉnh sửa hồ sơ của chính mình; trường định danh nhạy cảm cần xác minh theo chính sách. & Must\\
+FR-AUTH-05 & Thủ thư có thể tìm kiếm, tạo, cập nhật, khóa/mở khóa tài khoản; không xóa cứng tài khoản có giao dịch. & Must\\
+\bottomrule
+\end{longtable}
+
+\section{Thẻ thư viện}
+\begin{longtable}{L{2.2cm}L{9.9cm}L{2.2cm}}
+\toprule Mã & Mô tả & Ưu tiên\\\midrule\endhead
+FR-CARD-01 & Độc giả đã đăng nhập có thể gửi yêu cầu mở thẻ và xem trạng thái xử lý. & Must\\
+FR-CARD-02 & Hệ thống từ chối yêu cầu trùng khi đã có thẻ đang hiệu lực hoặc yêu cầu đang chờ. & Must\\
+FR-CARD-03 & Thủ thư có thể tìm kiếm, phê duyệt, cấp, cập nhật hạng, khóa, mở khóa và hết hạn thẻ. & Must\\
+FR-CARD-04 & Hệ thống lưu ngày mở, ngày hết hạn, trạng thái, hạng thẻ và tài khoản sở hữu. & Must\\
+\bottomrule
+\end{longtable}
+
+\section{Danh mục và tồn kho}
+\begin{longtable}{L{2.2cm}L{9.9cm}L{2.2cm}}
+\toprule Mã & Mô tả & Ưu tiên\\\midrule\endhead
+FR-CAT-01 & Thủ thư có thể tạo, xem, sửa, ngưng sử dụng và tìm kiếm thể loại; tên thể loại không trùng sau chuẩn hóa. & Must\\
+FR-TITLE-01 & Thủ thư quản lý đầu sách gồm tựa, tác giả, nhà xuất bản, độ tuổi đọc, mô tả và các thể loại. & Must\\
+FR-BOOK-01 & Thủ thư quản lý từng bản sao gồm mã sách, đầu sách, vị trí và tình trạng/trạng thái. & Must\\
+FR-BOOK-02 & Hệ thống không cho ngưng/xóa bản sao đang thuộc giao dịch mượn chưa đóng. & Must\\
+FR-SEARCH-01 & Người dùng tìm theo từ khóa, tựa, tác giả, thể loại, mã sách và trạng thái; có phân trang và thông báo khi rỗng. & Must\\
+FR-SEARCH-02 & Kết quả hiển thị thông tin đầu sách, tổng số bản sao và số bản sao sẵn sàng. & Should\\
+\bottomrule
+\end{longtable}
+
+\section{Mượn và trả}
+\begin{longtable}{L{2.2cm}L{9.9cm}L{2.2cm}}
+\toprule Mã & Mô tả & Ưu tiên\\\midrule\endhead
+FR-LOAN-01 & Độc giả có thẻ hợp lệ có thể đăng ký mượn một hoặc nhiều bản sao còn sẵn sàng. & Must\\
+FR-LOAN-02 & Trước khi xác nhận, hệ thống kiểm tra thẻ, hạn mức, nợ/quá hạn và trạng thái từng bản sao. & Must\\
+FR-LOAN-03 & Thủ thư có thể tạo, tra cứu và cập nhật phiếu mượn gồm địa điểm, mô tả, sách, ngày mượn và hạn trả. & Must\\
+FR-LOAN-04 & Xác nhận mượn phải tạo chi tiết giao dịch và đổi trạng thái tất cả bản sao theo cơ chế all-or-nothing. & Must\\
+FR-RETURN-01 & Thủ thư ghi nhận trả theo phiếu mượn, ngày trả, tình trạng từng sách và phí phạt. & Must\\
+FR-RETURN-02 & Hệ thống ngăn trả trùng và cập nhật trạng thái sách ngay khi giao dịch trả thành công. & Must\\
+FR-HIST-01 & Độc giả chỉ xem lịch sử mượn/trả của mình; thủ thư được tra cứu theo mã phiếu, thẻ, độc giả, sách và khoảng ngày. & Must\\
+FR-NOTI-01 & Hệ thống hiển thị cảnh báo sắp đến hạn, quá hạn và kết quả xử lý trên giao diện. & Should\\
+\bottomrule
+\end{longtable}
+
+\section{Báo cáo và kiểm toán}
+\begin{longtable}{L{2.2cm}L{9.9cm}L{2.2cm}}
+\toprule Mã & Mô tả & Ưu tiên\\\midrule\endhead
+FR-RPT-01 & Thủ thư xem báo cáo sách đang mượn, quá hạn, hư hỏng/mất, lượt mượn theo kỳ và tồn kho. & Should\\
+FR-RPT-02 & Báo cáo cho phép lọc theo khoảng ngày và xuất CSV/PDF. & Could\\
+FR-AUD-01 & Người có quyền xem nhật ký thao tác quản trị theo người dùng, thời gian, đối tượng và hành động. & Must\\
+\bottomrule
+\end{longtable}
+
+\chapter{Yêu cầu phi chức năng}
+\begin{longtable}{L{2.2cm}L{9.6cm}L{2.5cm}}
+\toprule Mã & Yêu cầu/tiêu chí đo lường & Cách xác minh\\\midrule\endhead
+NFR-PERF-01 & 95\% yêu cầu xem/tra cứu phản hồi trong 2 giây, cập nhật trong 3 giây ở tải 100 người dùng đồng thời. & Load test\\
+NFR-PERF-02 & Kết quả tìm kiếm đầu tiên không quá 3 giây với 100.000 đầu sách và 500.000 bản sao. & Performance test\\
+NFR-AVL-01 & Độ sẵn sàng mục tiêu 99,5\% mỗi tháng, không tính bảo trì đã thông báo. & Monitoring report\\
+NFR-SEC-01 & Mọi kết nối dùng TLS 1.2+; mật khẩu băm bằng thuật toán thích ứng (Argon2id/bcrypt), không lưu dạng rõ. & Security review\\
+NFR-SEC-02 & RBAC được kiểm tra ở máy chủ; khóa tạm sau 5 lần đăng nhập sai trong 15 phút; phiên nhàn rỗi hết hạn sau 30 phút. & Security test\\
+NFR-SEC-03 & Chống OWASP Top 10 phù hợp: kiểm tra đầu vào, truy vấn tham số hóa, CSRF, XSS và rate limit. & SAST/DAST\\
+NFR-PRV-01 & Chỉ thu thập PII cần thiết; che dữ liệu nhạy cảm trên log; phân quyền xem và có chính sách lưu/xóa được phê duyệt. & Audit\\
+NFR-USE-01 & Giao diện responsive từ 360px; thao tác bàn phím; tương phản và nhãn biểu mẫu hướng tới WCAG 2.1 AA. & Kiểm thử khả dụng\\
+NFR-REL-01 & Giao dịch mượn/trả bảo đảm toàn vẹn; lỗi giữa chừng phải rollback, không để trạng thái nửa vời. & Integration test\\
+NFR-BCK-01 & Sao lưu tự động hằng ngày; RPO không quá 24 giờ, RTO không quá 4 giờ; kiểm thử phục hồi mỗi quý. & Restore drill\\
+NFR-MNT-01 & Có môi trường dev/test/prod, cấu hình tách khỏi mã nguồn, migration CSDL có phiên bản và log tập trung. & Review\\
+NFR-COMP-01 & Hỗ trợ hai phiên bản mới nhất của Chrome, Edge và Firefox tại thời điểm phát hành. & Compatibility test\\
+\bottomrule
+\end{longtable}
+
+\chapter{Dữ liệu và giao diện ngoài}
+\section{Mô hình dữ liệu logic}
+\begin{longtable}{L{3cm}L{4.2cm}L{7cm}}
+\toprule Thực thể & Khóa/quan hệ chính & Thuộc tính trọng yếu\\\midrule\endhead
+TaiKhoan & MaTaiKhoan & TenDangNhap, MatKhauBam, TenThat, VaiTro, SDT, DiaChi, NgaySinh, TrangThai\\
+TheThuVien & MaThe; FK MaTaiKhoan & TrangThaiThe, HangThe, NgayMo, NgayHetHan\\
+TheLoai & MaTheLoai & TenTheLoai, MoTa, TrangThai\\
+DauSach & MaDauSach & TuaSach, TacGia, NXB, DoTuoiDoc, MoTa\\
+DauSach\_\allowbreak TheLoai & FK kép & MaDauSach, MaTheLoai\\
+Sach & MaSach; FK MaDauSach & TinhTrang, TrangThai, ViTri\\
+PhieuMuon & MaPhieuMuon; FK MaThe & MoTa, DiaDiem, TrangThai, HanTra\\
+ChiTietMuon & FK kép & MaPhieuMuon, MaSach, NgayMuon, TrangThai\\
+PhieuTra & MaPhieuTra; FK MaThe/MaPhieuMuon & NgayTra, TinhTrang, PhiPhat\\
+AuditLog & MaLog; FK người thực hiện & HanhDong, DoiTuong, Truoc, Sau, ThoiDiem\\
+\bottomrule
+\end{longtable}
+
+\section{Quy tắc dữ liệu}
+Khóa chính không tái sử dụng; khóa ngoại bảo đảm toàn vẹn tham chiếu; thời điểm lưu kèm múi giờ; tiền phạt dùng kiểu decimal; chuỗi tìm kiếm được chuẩn hóa Unicode. Dữ liệu giao dịch và audit không xóa cứng. Mật khẩu chỉ tồn tại ở dạng băm. Thời hạn lưu PII và audit phải được đại diện thư viện phê duyệt trước go-live.
+
+\section{Giao diện người dùng}
+\begin{itemize}
+\item Màn hình công khai: trang chủ, tra cứu, chi tiết đầu sách, đăng ký và đăng nhập.
+\item Khu vực độc giả: hồ sơ, thẻ, đăng ký mượn, lịch sử và cảnh báo.
+\item Khu vực thủ thư: dashboard, tài khoản/thẻ, danh mục/sách, mượn/trả, báo cáo và audit.
+\item Mọi biểu mẫu hiển thị trường bắt buộc, lỗi cạnh trường, xác nhận thao tác nguy hiểm và phản hồi thành công/thất bại.
+\end{itemize}
+
+\section{Giao diện phần mềm và truyền thông}
+Phiên bản 1.0 cung cấp giao diện web qua HTTPS và API nội bộ dạng JSON/REST (hoặc tương đương) có versioning. CSDL không được truy cập trực tiếp từ trình duyệt. Dịch vụ email/SMS, cổng thanh toán và RFID chưa phải phụ thuộc bắt buộc; khi bổ sung phải qua change request và đặc tả hợp đồng tích hợp.
+
+\chapter{Use case trọng yếu và tiêu chí chấp nhận}
+\section{UC-12 -- Đăng nhập}
+\textbf{Actor:} Độc giả/Thủ thư. \textbf{Tiền điều kiện:} tài khoản hoạt động. \textbf{Kích hoạt:} người dùng gửi thông tin đăng nhập.
+\begin{enumerate}
+\item Hệ thống kiểm tra định dạng, giới hạn tần suất và đối chiếu mật khẩu băm.
+\item Nếu hợp lệ, hệ thống tạo phiên, nạp vai trò và chuyển đến trang phù hợp.
+\item Nếu không hợp lệ, hệ thống thông báo chung và tăng bộ đếm thất bại.
+\end{enumerate}
+\textbf{Chấp nhận:} đúng thông tin thì vào đúng vai trò; sai thông tin không tạo phiên; lần sai thứ 5 trong cửa sổ 15 phút kích hoạt khóa tạm và được ghi log.
+
+\section{UC-22 -- Đăng ký mượn sách}
+\textbf{Tiền điều kiện:} độc giả đã đăng nhập, thẻ hiệu lực. \textbf{Luồng chính:} chọn sách sẵn sàng; hệ thống kiểm tra thẻ/hạn mức/quá hạn/tồn kho; độc giả xác nhận; hệ thống tạo yêu cầu/phiếu và giữ trạng thái nhất quán. \textbf{Ngoại lệ:} thẻ không hợp lệ, hết sách, vượt hạn mức hoặc đang quá hạn thì từ chối và nêu lý do có thể khắc phục.
+
+\section{UC-RETURN -- Ghi nhận trả sách}
+\textbf{Actor:} Thủ thư. Thủ thư tìm phiếu đang mở, quét/chọn bản sao, nhập tình trạng và xác nhận. Hệ thống tính đề xuất phí phạt, đóng chi tiết mượn, ghi phiếu trả và cập nhật bản sao trong một giao dịch. Trả trùng hoặc sách không thuộc phiếu phải bị từ chối.
+
+\chapter{Ma trận truy vết yêu cầu}
+\begin{longtable}{L{2cm}L{4.5cm}L{4.1cm}L{3.4cm}}
+\toprule Mục tiêu & Business req. & Functional req. & Kiểm thử/UAT\\\midrule\endhead
+BG-01 & BR-01, BR-03 & FR-CAT-01, FR-TITLE-01, FR-BOOK-01 & TC-CAT-01, TC-BOOK-01\\
+BG-02 & BR-03, BR-04 & FR-LOAN-03--04, FR-RETURN-01--02 & UAT-LOAN-01, UAT-RETURN-01\\
+BG-03 & BR-02 & FR-AUTH-01--04, FR-SEARCH-01--02, FR-HIST-01 & UAT-READER-01\\
+BG-04 & BR-04 & FR-BOOK-02, FR-LOAN-02--04, FR-RETURN-02 & TC-CONC-01, TC-ROLLBACK-01\\
+BG-05 & BR-05 & FR-AUD-01, NFR-SEC-01--03, NFR-PRV-01 & SEC-01, AUD-01\\
+\bottomrule
+\end{longtable}
+
+\chapter{Nghiệm thu, triển khai và quản trị}
+\section{Điều kiện vào/ra UAT}
+\textbf{Điều kiện vào:} SRS baseline được duyệt; test environment ổn định; migration hoàn tất; dữ liệu mẫu đã ẩn danh; không còn lỗi blocker trong system test. \textbf{Điều kiện ra:} 100\% test Must chạy, ít nhất 95\% đạt; không còn lỗi Critical/High chưa có chấp thuận; các NFR trọng yếu đạt; đại diện thư viện ký UAT.
+
+\section{Kịch bản UAT tối thiểu}
+\begin{longtable}{L{2.5cm}L{7cm}L{5cm}}
+\toprule Mã & Kịch bản & Kết quả mong đợi\\\midrule\endhead
+UAT-READER-01 & Đăng ký, đăng nhập, mở thẻ, tra cứu, xem hồ sơ/lịch sử & Dữ liệu đúng phạm vi cá nhân, điều hướng rõ ràng\\
+UAT-LOAN-01 & Mượn sách với thẻ hợp lệ và bản sao sẵn sàng & Phiếu tạo thành công, sách chuyển Đang mượn\\
+UAT-LOAN-02 & Mượn khi thẻ hết hạn/hết sách/vượt hạn mức & Bị từ chối đúng rule, dữ liệu không đổi\\
+UAT-RETURN-01 & Trả đúng hạn và trả quá hạn/hư hỏng & Cập nhật sách, đóng khoản mượn, phí phạt đúng cấu hình\\
+UAT-ADMIN-01 & CRUD/ngưng hoạt động danh mục và tài khoản & Đúng quyền, ràng buộc dữ liệu và audit\\
+\bottomrule
+\end{longtable}
+
+\section{Rủi ro và biện pháp}
+\begin{longtable}{L{1.7cm}L{4.9cm}L{1.7cm}L{5.2cm}}
+\toprule Mã & Rủi ro & Mức & Ứng phó\\\midrule\endhead
+RSK-01 & Chính sách mượn/phạt chưa chốt & Cao & Workshop với thư viện; cấu hình hóa; ký decision log\\
+RSK-02 & Dữ liệu đầu vào trùng/thiếu & Cao & Profiling, quy tắc làm sạch, dry-run migration\\
+RSK-03 & Tranh chấp cùng mượn một bản sao & Cao & Transaction/locking và kiểm thử đồng thời\\
+RSK-04 & Rò rỉ PII hoặc lạm quyền & Cao & RBAC, mã hóa truyền, audit, security test\\
+RSK-05 & Scope creep tích hợp ngoài & Trung bình & Quản lý change request và giữ ngoài phạm vi v1.0\\
+RSK-06 & Người dùng khó thích nghi & Trung bình & Prototype, usability test, hướng dẫn và pilot\\
+\bottomrule
+\end{longtable}
+
+\section{Quản lý thay đổi}
+Mọi thay đổi sau baseline phải có Change Request nêu lý do, yêu cầu liên quan, tác động phạm vi/chi phí/tiến độ/rủi ro và quyết định phê duyệt. BA cập nhật SRS, RTM và version; QA cập nhật test; thay đổi chỉ triển khai sau khi người có thẩm quyền phê duyệt.
+
+\chapter{Các điểm cần xác nhận trước phát triển}
+\begin{longtable}{L{2cm}L{8cm}L{4.5cm}}
+\toprule Mã & Quyết định còn mở & Chủ trì\\\midrule\endhead
+OPEN-01 & Tuổi tối thiểu, thời hạn thẻ và các hạng thẻ & Đại diện thư viện\\
+OPEN-02 & Hạn mức số sách, số ngày mượn, gia hạn và điều kiện chặn & Đại diện thư viện\\
+OPEN-03 & Công thức quá hạn/hư hỏng/mất và quy trình miễn/điều chỉnh phí & Đại diện thư viện\\
+OPEN-04 & Có duyệt thủ công đăng ký thẻ và đăng ký mượn hay không & Product Owner\\
+OPEN-05 & Chính sách lưu PII/audit, quyền xem và quy trình xóa/ẩn danh & Sponsor/Pháp chế\\
+OPEN-06 & Mức tải thực tế, SLA, RPO/RTO để hiệu chỉnh NFR & Kiến trúc/Thư viện\\
+\bottomrule
+\end{longtable}
+
+\appendix
+\chapter{Ánh xạ use case từ report gốc}
+\begin{longtable}{L{2cm}L{5cm}L{7cm}}
+\toprule Mã gốc & Tên & Yêu cầu SRS liên quan\\\midrule\endhead
+UC01--UC03 & Cập nhật thể loại/đầu sách/sách & FR-CAT-01, FR-TITLE-01, FR-BOOK-01--02\\
+UC04--UC06 & Tìm kiếm thể loại/đầu sách/sách & FR-SEARCH-01--02\\
+UC07--UC10 & Cập nhật/tìm phiếu mượn và trả & FR-LOAN-03--04, FR-RETURN-01--02, FR-HIST-01\\
+UC11--UC13 & Đăng ký/đăng nhập/đăng xuất & FR-AUTH-01--03\\
+UC14--UC16 & Lịch sử và thông tin cá nhân & FR-AUTH-04, FR-HIST-01\\
+UC17, UC19 & Cập nhật/tìm tài khoản & FR-AUTH-05\\
+UC18, UC20, UC21 & Cập nhật/tìm/đăng ký thẻ & FR-CARD-01--04\\
+UC22 & Đăng ký mượn sách & FR-LOAN-01--04\\
+\bottomrule
+\end{longtable}
+
+\chapter{Tiêu chuẩn sẵn sàng và hoàn thành}
+\sloppy\textbf{Ready:} yêu cầu có ID, giá trị nghiệp vụ, actor, rule, tiêu chí chấp nhận, mockup hoặc luồng khi cần, dữ liệu, phụ thuộc, ưu tiên và ước lượng; các câu hỏi chặn đã đóng. \textbf{Done:} code review và CI đạt; unit/integration/system test đạt; NFR liên quan được xác minh; tài liệu/migration/audit hoàn tất; không có lỗi nghiêm trọng; Product Owner chấp nhận.\fussy
+
+\vfill
+\begin{center}\color{HUFLITblue}\rule{0.65\textwidth}{0.8pt}\\
+\small Hết tài liệu -- Software Requirements Specification v1.0
+\end{center}
+\end{document}
